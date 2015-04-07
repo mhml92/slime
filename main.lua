@@ -1,5 +1,4 @@
 math.random = love.math.random
-
 class       = require 'middleclass/middleclass'
 Scene       = require 'Scene'
 Entity      = require 'Entity' 
@@ -9,9 +8,11 @@ time.fdt = 1/60 --fixed delta time
 time.accum = 0
 local self = {}
 function love.load()
+   GameState.registerEvents()
    love.mouse.setVisible(false)
    local w,h = love.graphics.getDimensions()
    love.graphics.setScissor( 0, 0, w, h)
+   
    self.scene = TestScene:new()   
 end
 
@@ -30,6 +31,22 @@ function love.draw()
    self.scene:draw()
    love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10) 
 end 
+
+function love.keypressed( key, isrepeat )
+   self.scene:keypressed(key,isrepeat)
+end
+
+function love.keyreleased( key, isrepeat )
+   self.scene:keyreleased(key,isrepeat)
+end
+
+function love.mousepressed(x,y,button)
+   self.scene:mousepressed(x,y,button)
+end
+
+function love.mousereleased(x,y,button)
+   self.scene:mousereleased(x,y,button)
+end
 
 function beginContact(a,b,coll)
    self.scene:beginContact(a,b,coll)

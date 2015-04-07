@@ -18,4 +18,7 @@ end
 function TestObject:draw()
 	lg.circle("fill", self.body:getX(), self.body:getY(), 16)
 end
+
+function TestObject
+
 return TestObject
