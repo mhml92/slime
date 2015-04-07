@@ -1,8 +1,8 @@
 math.random = love.math.random
 
-local class       = require 'middleclass/middleclass'
-local Scene       = require 'Scene'
-
+class       = require 'middleclass/middleclass'
+Scene       = require 'Scene'
+Entity      = require 'Entity' 
 local time = {}
 time.fdt = 1/60 --fixed delta time
 time.accum = 0
