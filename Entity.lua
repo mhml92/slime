@@ -39,7 +39,7 @@ end
 function Entity:mousepressed(x, y, button)
 end
 
-function Entity:keypressed(x, y, button)
+function Entity:mousereleased(x, y, button)
 end
 
 return Entity

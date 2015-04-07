@@ -8,8 +8,7 @@ time.fdt = 1/60 --fixed delta time
 time.accum = 0
 local self = {}
 function love.load()
-   GameState.registerEvents()
-   love.mouse.setVisible(false)
+   --love.mouse.setVisible(false)
    local w,h = love.graphics.getDimensions()
    love.graphics.setScissor( 0, 0, w, h)
    
