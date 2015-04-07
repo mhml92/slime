@@ -3,6 +3,7 @@ math.random = love.math.random
 class       = require 'middleclass/middleclass'
 Scene       = require 'Scene'
 Entity      = require 'Entity' 
+local TestScene = require "TestScene"
 local time = {}
 time.fdt = 1/60 --fixed delta time
 time.accum = 0
@@ -11,7 +12,7 @@ function love.load()
    love.mouse.setVisible(false)
    local w,h = love.graphics.getDimensions()
    love.graphics.setScissor( 0, 0, w, h)
-   self.scene = Scene:new()   
+   self.scene = TestScene:new()   
 end
 
 function love.update(dt)
