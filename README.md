@@ -1,2 +1,2 @@
 # slime
-Slime game prototype in lua with löve2d
+Slime game prototype in lua with the awesome Löve2d game framework.
