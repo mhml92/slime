@@ -11,9 +11,10 @@ function TestObject:initialize(x, y, scene)
 	self.shape = phys.newCircleShape(16)
 	self.fixture = phys.newFixture(self.body, self.shape)
 	self.fixture:setRestitution(0.4)
+   self.body:setLinearDamping(1)
 
 	local FREQ = 1
-	local DISTSCALE = 2
+	local DISTSCALE = 3
 
 	self.nodes = {}
 	local step = 2*math.pi/SEG
@@ -51,7 +52,8 @@ function TestObject:initialize(x, y, scene)
 		local ax, ay = a:getX(), a:getY()
 		local dist = math.sqrt((ax-x)^2 + (ay-y)^2)
 		local tmp = phys.newDistanceJoint(a, self.body, ax, ay, x, y, dist, true)
-		tmp:setFrequency(FREQ)
+		--tmp:setFrequency(FREQ)
+      tmp:setFrequency(2)
 	end
 
 	self.aiming = false
@@ -82,7 +84,7 @@ function TestObject:mousereleased(x, y, button)
 	if self.aiming then
 		local bx, by = self.body:getX(), self.body:getY()
 		local dx, dy = x-bx, y-by
-		self.body:setLinearVelocity(5*dx, 5*dy)
+		self.body:setLinearVelocity(-5*dx, -5*dy)
 		--self.body:applyLinearImpulse(3*dx, 3*dy)
 	end
 	self.aiming = false
