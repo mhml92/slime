@@ -1,7 +1,7 @@
 local TestObject = class("TestObject", Entity)
 local lg = love.graphics
 local phys = love.physics
-local SMALL_RADIUS = 8
+local SMALL_RADIUS = 16
 local SEG = 10
 
 function TestObject:initialize(x, y, scene)
@@ -14,7 +14,7 @@ function TestObject:initialize(x, y, scene)
    self.body:setLinearDamping(1)
 
 	local FREQ = 1
-	local DISTSCALE = 3
+	local DISTSCALE = 0.5
 
 	self.nodes = {}
 	local step = 2*math.pi/SEG
@@ -36,7 +36,7 @@ function TestObject:initialize(x, y, scene)
 	self.joints = {}
 	for i=0,SEG-1 do
 		for j=0,SEG-1 do
-			if i ~= j then
+			if i > j then
 				local a = self.nodes[i].body
 				local b = self.nodes[j].body
 				local ax, ay = a:getX(), a:getY()
@@ -51,11 +51,10 @@ function TestObject:initialize(x, y, scene)
 		local a = self.nodes[i].body
 		local ax, ay = a:getX(), a:getY()
 		local dist = math.sqrt((ax-x)^2 + (ay-y)^2)
-		local tmp = phys.newDistanceJoint(a, self.body, ax, ay, x, y, dist, true)
-		--tmp:setFrequency(FREQ)
-      tmp:setFrequency(2)
+		local tmp = phys.newDistanceJoint(a, self.body, ax, ay, x, y, dist*DISTSCALE, true)
+		tmp:setFrequency(FREQ)
+      --tmp:setFrequency(2)
 	end
-
 	self.aiming = false
 end
 
@@ -72,6 +71,11 @@ function TestObject:draw()
 		local b = self.nodes[(i+1)%SEG].body
 		lg.line(a:getX(), a:getY(), b:getX(), b:getY())
 	end
+   for i = 0,SEG-1 do 
+		local a = self.nodes[i].body
+      lg.circle("fill",a:getX(),a:getY(),SMALL_RADIUS)
+   end
+
 end
 
 function TestObject:mousepressed(x, y, button)
@@ -85,6 +89,12 @@ function TestObject:mousereleased(x, y, button)
 		local bx, by = self.body:getX(), self.body:getY()
 		local dx, dy = x-bx, y-by
 		self.body:setLinearVelocity(-5*dx, -5*dy)
+      for i = 0,SEG-1 do
+         local a = self.nodes[i].body
+         a:setLinearVelocity(-5*dx,-5*dy)
+         
+      end
+
 		--self.body:applyLinearImpulse(3*dx, 3*dy)
 	end
 	self.aiming = false
